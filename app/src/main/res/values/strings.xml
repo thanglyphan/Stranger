@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Stranger</string>
+    <string name="firebaseId">AIzaSyAGvAclrlMfZjcGAo8DS55_QQOJHwDAd0I</string>
+    <string name="fireBaseApi">https://fcm.googleapis.com/fcm/send</string>
 </resources>

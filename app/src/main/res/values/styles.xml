@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!-- Base application theme. -->
@@ -6,6 +7,16 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="splashScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/me</item>
+    </style>
+
+    <style name="AllWhite" parent="Theme.AppCompat.Light">
+        <item name="android:colorBackground">@color/colorWhite</item>
+        <item name="colorAccent">@color/colorOrange</item>
+        <item name="android:statusBarColor">@color/colorOrange</item>
     </style>
 
 </resources>
