@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -32,12 +33,17 @@ public class ProfileFragment extends DialogFragment implements View.OnClickListe
     private String UID;
     private String role;
     private String firebaseToken;
+    private String vibrate;
+    private String sound;
+    private String notification;
+    private int notificationCount;
     public SharedPreferences prefs;
     private FDatabase fD;
     EditText displayName;
     RadioButton rMale;
     RadioButton rFemale;
     TextView showDate;
+    private Typeface tf;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,12 +59,17 @@ public class ProfileFragment extends DialogFragment implements View.OnClickListe
         this.rFemale = (RadioButton)view.findViewById(R.id.radioFemale2);
         this.showDate = (TextView)view.findViewById(R.id.showMyDate2);
 
+        this.tf = Typeface.createFromAsset(getContext().getAssets(), String.format("fonts/%s", "Dense.otf"));
+        displayName.setTypeface(tf);
+
+
 
         prefs = getActivity().getApplicationContext().getSharedPreferences("com.phan.thang.stranger", Context.MODE_PRIVATE);
         getUserInfo();
         setFieldsOnLayout();
         return view;
     }
+
 
     private void getUserInfo(){
         Gson gson = new Gson();
@@ -71,6 +82,11 @@ public class ProfileFragment extends DialogFragment implements View.OnClickListe
         this.UID = user.UID;
         this.role = user.role;
         this.firebaseToken = user.firebaseToken;
+        this.vibrate = user.vibrate;
+        this.sound = user.sound;
+        this.notification = user.notification;
+        this.notificationCount = user.notificationCount;
+
     }
     private void setFieldsOnLayout(){
         displayName.setText(name);
@@ -95,6 +111,10 @@ public class ProfileFragment extends DialogFragment implements View.OnClickListe
                 age = showDate.getText().toString();
                 if(fD.updateUser(name, gender, age, UID, role, firebaseToken)){
                     User user = new User(name, gender, age, UID, role, firebaseToken);
+                    user.notification = this.notification;
+                    user.notificationCount = this.notificationCount;
+                    user.vibrate = this.vibrate;
+                    user.sound = this.sound;
                     Gson gson = new Gson();
                     String json = gson.toJson(user);
                     prefs.edit().putString("user", json).apply();
@@ -113,5 +133,6 @@ public class ProfileFragment extends DialogFragment implements View.OnClickListe
 
         }
     }
+
 
 }

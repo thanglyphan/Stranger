@@ -24,9 +24,10 @@ public class FDatabase {
         return true;
     }
     public boolean updateUser(String name, String gender, String age, String uid, String role, String firebaseToken){
-        User user = new User(name, gender, age, uid, role, firebaseToken);
 
-        mDatabase.child("users").child(uid).setValue(user);
+        mDatabase.child("users").child(uid).child("name").setValue(name);
+        mDatabase.child("users").child(uid).child("gender").setValue(gender);
+        mDatabase.child("users").child(uid).child("age").setValue(age);
         return true;
     }
 
@@ -44,10 +45,6 @@ public class FDatabase {
     }
     public boolean addNotificationCount(int a, String uid){
         mDatabase.child("users").child(uid).child("notificationCount").setValue(a);
-        return true;
-    }
-    public boolean addFirebaseUniqueID(String a, String uid){
-        mDatabase.child("users").child(uid).child("firebaseUniqueID").setValue(a);
         return true;
     }
 

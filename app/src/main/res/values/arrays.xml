@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="settings_list">
+        <item>Profile</item>
+        <item>Terms of use</item>
+        <item>Notifications</item>
+        <item>Contact us</item>
+    </string-array>
+</resources>

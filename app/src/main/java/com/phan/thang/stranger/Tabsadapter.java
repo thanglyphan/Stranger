@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
  */
 public class Tabsadapter  extends FragmentStatePagerAdapter {
 
-    private int TOTAL_TABS = 2;
+    private int TOTAL_TABS = 3;
 
     public Tabsadapter(FragmentManager fm) {
         super(fm);
@@ -24,7 +24,11 @@ public class Tabsadapter  extends FragmentStatePagerAdapter {
                 return new ChannelsFragment();
 
             case 1:
+                return new MyAccountFragment();
+
+            case 2:
                 return new SettingsFragment();
+
         }
 
         return null;

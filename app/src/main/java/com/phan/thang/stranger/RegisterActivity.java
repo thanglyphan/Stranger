@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import java.util.Calendar;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -99,7 +101,12 @@ public class RegisterActivity extends AppCompatActivity {
         TextView dayOfBirth = (TextView)findViewById(R.id.showMyDate);
         this.age = dayOfBirth.getText().toString();
 
-        fD.addNewUser(name, gender, age, androidId, role, firebaseToken);
+        if(firebaseToken == null || firebaseToken.equals("")){
+            fD.addNewUser(name, gender, age, androidId, role, FirebaseInstanceId.getInstance().getToken());
+
+        }else{
+            fD.addNewUser(name, gender, age, androidId, role, firebaseToken);
+        }
         Intent menuActivity = new Intent(RegisterActivity.this, MenuActivity.class);
         menuActivity.putExtra("id", androidId);
         startActivity(menuActivity);

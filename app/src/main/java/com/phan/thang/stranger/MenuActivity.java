@@ -4,13 +4,21 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,10 +48,19 @@ public class MenuActivity extends ActionBarActivity implements ActionBar.TabList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+
+        //Set custom font.
+        SpannableString s = new SpannableString("Stranger");
+        s.setSpan(new com.phan.thang.stranger.TypefaceSpan(this, "Bellico.otf"), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getSupportActionBar().setTitle(s);
+        //End custom font.
+
         Bundle extras = getIntent().getExtras();
         androidId = extras.getString("id");
 
         tokenFirebase = FirebaseInstanceId.getInstance().getToken();
+        System.out.println(tokenFirebase);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -98,20 +115,24 @@ public class MenuActivity extends ActionBarActivity implements ActionBar.TabList
 
     public void initializeTabs(){
         tabsviewPager = (ViewPager) findViewById(R.id.tabspager);
+        tabsviewPager.setOffscreenPageLimit(2);
 
         mTabsAdapter = new Tabsadapter(getSupportFragmentManager());
 
         tabsviewPager.setAdapter(mTabsAdapter);
-
         getSupportActionBar().setHomeButtonEnabled(false);
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        ActionBar.Tab channeltab = getSupportActionBar().newTab().setText("Channels").setTabListener(this);
-        ActionBar.Tab settingstab = getSupportActionBar().newTab().setText("Settings").setTabListener(this);
+        ActionBar.Tab channeltab = getSupportActionBar().newTab().setTabListener(this);
+        ActionBar.Tab settingstab = getSupportActionBar().newTab().setTabListener(this);
+        ActionBar.Tab accounttab = getSupportActionBar().newTab().setTabListener(this);
+        channeltab.setIcon(R.drawable.ic_home_black_24dp);
+        settingstab.setIcon(R.drawable.ic_settings_black_24dp);
+        accounttab.setIcon(R.drawable.ic_account_box_black_24dp);
 
         getSupportActionBar().addTab(channeltab);
+        getSupportActionBar().addTab(accounttab);
         getSupportActionBar().addTab(settingstab);
-
 
         //This helps in providing swiping effect for v7 compat library
         tabsviewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -136,11 +157,20 @@ public class MenuActivity extends ActionBarActivity implements ActionBar.TabList
             }
         });
     }
+    @Override
+    public void onBackPressed()
+    {
+        if(getFragmentManager().getBackStackEntryCount() > 0)
+            getFragmentManager().popBackStack();
+        else
+            super.onBackPressed();
+    }
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
         tabsviewPager.setCurrentItem(tab.getPosition());
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();
 
     }
 

@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by thang on 14.08.2016.
@@ -21,11 +23,12 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.settingsview, container, false);
-
-        ArrayList<String> items = GetSettingsList();
+        List<String> items = Arrays.asList(getResources().getStringArray(R.array.settings_list));
 
         lv = (ListView) view.findViewById(R.id.lv_settings);
-        lv.setAdapter(new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.custom_textview_listview, items));
+        CustomListAdapter my_adapter = new CustomListAdapter(getActivity().getApplicationContext(), R.layout.custom_textview_listview, items, "Dense.otf");
+
+        lv.setAdapter(my_adapter);//new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.custom_textview_listview, items));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -49,14 +52,5 @@ public class SettingsFragment extends Fragment {
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.addToBackStack(null);
         ft.commit();
-    }
-
-    private ArrayList GetSettingsList(){
-        ArrayList<String> theList = new ArrayList<String>();
-        theList.add("Profile");
-        theList.add("Terms of use");
-        theList.add("Notifications");
-        theList.add("Contact us");
-        return theList;
     }
 }
