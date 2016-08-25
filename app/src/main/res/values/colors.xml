@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#030101</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorIconSelected">#E53935</color>
     <color name="colorOrange">#FF7C00</color>
     <color name="White">#FFFFFF</color>
     <color name="Ivory">#FFFFF0</color>

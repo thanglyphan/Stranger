@@ -59,7 +59,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             }
 
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.drawable.ic_plus_one_black_24dp)
+                    .setSmallIcon(R.drawable.account_outline)
                     .setContentTitle("Stranger!")
                     .setContentText(theBody)
                     .setAutoCancel(true)

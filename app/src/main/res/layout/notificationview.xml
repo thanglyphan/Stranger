@@ -10,39 +10,49 @@
 
     <Switch
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Enable all"
+        android:layout_height="70dp"
+        android:textStyle="bold"
+        android:text="\t Enable all"
         android:id="@+id/allEnableSwitch"
-        android:layout_marginTop="135dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:switchMinWidth="70dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:switchMinWidth="70dp"/>
+        android:layout_alignParentStart="true" />
 
     <Switch
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Enable vibration"
+        android:layout_height="70dp"
+        android:textStyle="bold"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="\t Enable vibration"
         android:id="@+id/vibrateSwitch"
-        android:layout_below="@+id/allEnableSwitch"
-        android:layout_alignStart="@+id/allEnableSwitch"
-        android:switchMinWidth="70dp"/>
+        android:switchMinWidth="70dp"
+        android:layout_below="@+id/notificationSwitch"
+        android:layout_alignParentStart="true" />
 
     <Switch
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Enable sound "
+        android:layout_height="70dp"
+        android:textStyle="bold"
+        android:text="\t Enable sound "
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:id="@+id/soundSwitch"
+        android:switchMinWidth="70dp"
         android:layout_below="@+id/vibrateSwitch"
-        android:layout_alignStart="@+id/vibrateSwitch"
-        android:switchMinWidth="70dp"/>
+        android:layout_alignParentStart="true" />
 
     <Switch
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Enable notification"
+        android:layout_height="70dp"
+        android:textStyle="bold"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="\t Enable notification"
         android:id="@+id/notificationSwitch"
-        android:layout_below="@+id/soundSwitch"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:switchMinWidth="70dp"/>
+        android:switchMinWidth="70dp"
+        android:layout_below="@+id/allEnableSwitch"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

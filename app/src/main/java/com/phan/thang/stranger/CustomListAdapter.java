@@ -49,24 +49,28 @@ public class CustomListAdapter extends ArrayAdapter {
             mView = vi.inflate(layoutResourceId, null);
         }
 
-
-
         TextView text = (TextView) mView.findViewById(R.id.tv);
 
         if(items.get(position) != null )
         {
             text.setTextColor(Color.BLACK);
-            text.setText(items.get(position));
+            text.setText("\t" + items.get(position));
             text.setBackgroundColor(Color.WHITE);
             int color = Color.argb( 235, 255, 255, 255 );
             text.setBackgroundColor(color);
             text.setTextSize(23);
-
+            if(items.get(position).equals("Profile")){
+                text.setCompoundDrawablesWithIntrinsicBounds(R.drawable.lead_pencil, 0, R.drawable.chevron_right, 0);
+            }else if(items.get(position).equals("Terms of use")){
+                text.setCompoundDrawablesWithIntrinsicBounds(R.drawable.heart, 0, R.drawable.chevron_right, 0);
+            }else if(items.get(position).equals("Notifications")){
+                text.setCompoundDrawablesWithIntrinsicBounds(R.drawable.comment_alert_outline, 0, R.drawable.chevron_right, 0);
+            }else if(items.get(position).equals("Contact us")){
+                text.setCompoundDrawablesWithIntrinsicBounds(R.drawable.mail_ru, 0, R.drawable.chevron_right, 0);
+            }
         }
-
         text.setTypeface(tf);
         text.setTextColor(Color.BLACK);
-
 
         return mView;
     }

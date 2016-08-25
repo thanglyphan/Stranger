@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_nothing"
+        icon="@drawable/heart"
+        title="Hi!"
+        barColorWhenSelected="@color/colorOrange"/>
+    <tab
+        id="@+id/tab_back"
+        icon="@drawable/chevron_double_left"
+        title="Back"
+        barColorWhenSelected="@color/colorOrange"/>
+    <tab
+        id="@+id/tab_send"
+        icon="@drawable/check_all"
+        title="Send"
+        barColorWhenSelected="@color/colorOrange"/>
+</tabs>

@@ -4,8 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -28,9 +30,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class MenuActivity extends ActionBarActivity implements ActionBar.TabListener{
     private String androidId;
     private DatabaseReference mDatabase;
@@ -47,7 +46,6 @@ public class MenuActivity extends ActionBarActivity implements ActionBar.TabList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
 
         //Set custom font.
         SpannableString s = new SpannableString("Stranger");
@@ -126,9 +124,9 @@ public class MenuActivity extends ActionBarActivity implements ActionBar.TabList
         ActionBar.Tab channeltab = getSupportActionBar().newTab().setTabListener(this);
         ActionBar.Tab settingstab = getSupportActionBar().newTab().setTabListener(this);
         ActionBar.Tab accounttab = getSupportActionBar().newTab().setTabListener(this);
-        channeltab.setIcon(R.drawable.ic_home_black_24dp);
-        settingstab.setIcon(R.drawable.ic_settings_black_24dp);
-        accounttab.setIcon(R.drawable.ic_account_box_black_24dp);
+        channeltab.setIcon(R.drawable.home_outline);
+        settingstab.setIcon(R.drawable.account_settings_variant);
+        accounttab.setIcon(R.drawable.account_outline);
 
         getSupportActionBar().addTab(channeltab);
         getSupportActionBar().addTab(accounttab);
@@ -169,6 +167,8 @@ public class MenuActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
         tabsviewPager.setCurrentItem(tab.getPosition());
+        int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.colorIconSelected);
+        tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
 
@@ -177,6 +177,8 @@ public class MenuActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
+        int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.Black);
+        tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
     }
 
     @Override

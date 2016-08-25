@@ -3,6 +3,8 @@
     android:id="@+id/tv"
     android:textColor="@color/Black"
     android:layout_width="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceListItemSmall"
     android:gravity="center_vertical"

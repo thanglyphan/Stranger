@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.roughike.bottombar.BottomBar;
+
 /**
  * Created by thang on 18.08.2016.
  */
@@ -19,8 +21,7 @@ public class MyAccountFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.accountview, container, false);
-        testTxt = (TextView)view.findViewById(R.id.testTxt);
-
+        //testTxt = (TextView)view.findViewById(R.id.testTxt);
         return view;
 
     }

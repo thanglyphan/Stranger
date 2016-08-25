@@ -2,6 +2,7 @@ package com.phan.thang.stranger;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -23,22 +24,34 @@ public class NotificationsFragment extends Fragment{
     public SharedPreferences prefs;
     private User user;
     private FDatabase fD;
+    private Typeface tf;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.notificationview, container, false);
+        this.tf = Typeface.createFromAsset(getContext().getAssets(), String.format("fonts/%s", "Dense.otf"));
 
         prefs = getActivity().getSharedPreferences("com.phan.thang.stranger", Context.MODE_PRIVATE);
 
         this.user = getUser();
-        System.out.println(user.name);
-
         fD = new FDatabase();
 
         all = (Switch)view.findViewById(R.id.allEnableSwitch);
+        all.setTypeface(tf);
+        all.setTextSize(23);
+        all.setCompoundDrawablesWithIntrinsicBounds(R.drawable.check_all, 0, 0, 0);
         vibrate = (Switch)view.findViewById(R.id.vibrateSwitch);
+        vibrate.setTypeface(tf);
+        vibrate.setTextSize(23);
+        vibrate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.vibrate, 0 ,0 ,0);
         sound = (Switch)view.findViewById(R.id.soundSwitch);
+        sound.setTypeface(tf);
+        sound.setTextSize(23);
+        sound.setCompoundDrawablesWithIntrinsicBounds(R.drawable.volume_high, 0, 0, 0);
         notification = (Switch)view.findViewById(R.id.notificationSwitch);
+        notification.setTypeface(tf);
+        notification.setTextSize(23);
+        notification.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bell_ring_outline,0 ,0 ,0);
 
         if(user.sound.equals("On")){
             sound.toggle();
