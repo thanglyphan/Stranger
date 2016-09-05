@@ -40,4 +40,5 @@ public class User {
         return " Name: " + name + " \n Gender: " + gender + "\n Age: " + age + "\n UID: " + UID + "\n Role: " + role + "\n Vibrate: " + vibrate + "\n Sound: " + sound + "\n Notifications: " + notification + "\n Notification count: " + notificationCount;
     }
 
+
 }

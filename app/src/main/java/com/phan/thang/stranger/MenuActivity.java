@@ -5,6 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -22,6 +28,9 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +39,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
-public class MenuActivity extends ActionBarActivity implements ActionBar.TabListener{
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+public class MenuActivity extends ActionBarActivity implements ActionBar.TabListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private String androidId;
     private DatabaseReference mDatabase;
     private ProgressDialog pg;
@@ -39,6 +52,8 @@ public class MenuActivity extends ActionBarActivity implements ActionBar.TabList
     private Tabsadapter mTabsAdapter;
     private User user;
     private String tokenFirebase;
+    private String cityName;
+    private GoogleApiClient mGoogleApiClient;
 
     public SharedPreferences prefs;
 
@@ -46,6 +61,16 @@ public class MenuActivity extends ActionBarActivity implements ActionBar.TabList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        //Location
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+        //End location
 
         //Set custom font.
         SpannableString s = new SpannableString("Stranger");
@@ -69,6 +94,17 @@ public class MenuActivity extends ActionBarActivity implements ActionBar.TabList
 
         initializeTabs();
     }
+    @Override
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+    @Override
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
     private void setUser(User user){
         if(user != null){
             Gson gson = new Gson();
@@ -139,7 +175,6 @@ public class MenuActivity extends ActionBarActivity implements ActionBar.TabList
             public void onPageSelected(int position) {
                 // TODO Auto-generated method stub
                 getSupportActionBar().setSelectedNavigationItem(position);
-
             }
 
             @Override
@@ -156,12 +191,16 @@ public class MenuActivity extends ActionBarActivity implements ActionBar.TabList
         });
     }
     @Override
-    public void onBackPressed()
-    {
-        if(getFragmentManager().getBackStackEntryCount() > 0)
-            getFragmentManager().popBackStack();
-        else
+    public void onBackPressed() {
+
+        int count = getFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
             super.onBackPressed();
+        } else {
+            getFragmentManager().popBackStack();
+        }
+
     }
 
     @Override
@@ -183,6 +222,37 @@ public class MenuActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+
+            Geocoder gcd = new Geocoder(this, Locale.getDefault());
+            List<Address> addresses;
+            try {
+                addresses = gcd.getFromLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude(), 1);
+                if (addresses.size() > 0) {
+                    System.out.println(addresses.get(0).getLocality());
+                    this.cityName = addresses.get(0).getLocality();
+                }
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString("City", cityName).commit();
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 }

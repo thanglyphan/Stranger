@@ -28,7 +28,7 @@ public class SettingsFragment extends Fragment {
         lv = (ListView) view.findViewById(R.id.lv_settings);
         CustomListAdapter my_adapter = new CustomListAdapter(getActivity().getApplicationContext(), R.layout.custom_textview_listview, items, "Dense.otf");
 
-        lv.setAdapter(my_adapter);//new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.custom_textview_listview, items));
+        lv.setAdapter(my_adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

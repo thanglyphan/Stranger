@@ -9,15 +9,15 @@
     android:clickable="true"
     android:orientation="vertical">
 
-    <TextView
+
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="l"
-        android:id="@+id/testTxt"
-        android:layout_alignParentTop="true"
+        android:id="@+id/lv_channel"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp" />
+        android:layout_alignParentTop="true"
+        android:divider="@color/LightGrey"
+        android:dividerHeight="4dp"/>
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -25,7 +25,8 @@
         android:id="@+id/addBtn"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp" />
+        android:layout_alignBottom="@+id/lv_channel"
+        android:layout_marginBottom="5dp" />
 
 
 </RelativeLayout>

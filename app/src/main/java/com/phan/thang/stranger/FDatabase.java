@@ -31,6 +31,17 @@ public class FDatabase {
         return true;
     }
 
+    public boolean addLoveNotes(User a, String city, String username, String age, String message, String date, String uid) {
+        LoveNote love = new LoveNote(city, username, age, message, date, uid);
+
+        mDatabase.child("lovenotes").child(a.UID).setValue(love);
+        return true;
+    }
+    public boolean deleteLoveNote(String uid) {
+        mDatabase.child("lovenotes").child(uid).setValue(null);
+        return true;
+    }
+
     public boolean addVibrate(String a, String uid){
         mDatabase.child("users").child(uid).child("vibrate").setValue(a);
         return true;
